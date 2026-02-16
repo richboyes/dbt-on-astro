@@ -1,0 +1,9 @@
+FROM astrocrpublic.azurecr.io/runtime:3.0-14
+
+COPY certs/netskope-cert-bundle.crt /usr/local/share/ca-certificates/netskope-cert-bundle.crt
+RUN update-ca-certificates
+ENV UV_NATIVE_TLS=1
+
+# install dbt into a virtual environment
+RUN python -m venv dbt_venv && source dbt_venv/bin/activate && \
+    pip install --no-cache-dir dbt-duckdb==1.8.2 && deactivate

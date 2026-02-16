@@ -1,0 +1,8 @@
+astro
+.git
+.env
+airflow_settings.yaml
+logs/
+*.p8
+*.pem
+dbt/**/snowflake_key*
