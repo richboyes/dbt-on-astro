@@ -28,4 +28,3 @@ USER astro
 
 # Copy project into image
 COPY --chown=astro:0 . .
-

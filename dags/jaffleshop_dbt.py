@@ -18,7 +18,7 @@ dbt_cosmos_dag = DbtDag(
     # normal dag parameters
     schedule="@daily",
     start_date=datetime(2025, 4, 1),
-    dag_id="example_dbt_cosmos",
+    dag_id="jaffleshop_dbt",
     # Warning - in-memory DuckDB is not a persistent database between workers. To move this workflow in production, use a
     # cloud-based database and based on concurrency capabilities adjust the parameters below.
     max_active_tasks=1,  # only allow one concurrent task of this DAG, prevents parallel DuckDB calls

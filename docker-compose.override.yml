@@ -1,5 +1,7 @@
 # mount the dbt directory as a volume
 services:
   scheduler:
+    env_file:
+      - .env
     volumes:
       - ./dbt:/usr/local/airflow/dbt
