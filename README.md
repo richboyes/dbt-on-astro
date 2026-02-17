@@ -1,34 +1,44 @@
-# Project Overview
+# Updates required for Admiral Business
 
-Apache Airflow is one of the most widely-used engines for orchestrating Extract, Transform, and Load (ETL) jobs, especially for transformations using [dbt](https://www.getdbt.com). dbt is a framework to create reliable transformations to produce high-quality data for businesses, usually in analytical databases like Snowflake and BigQuery.
+This document outlines changes required to get this [astro](https://www.astronomer.io/docs) [DBT](https://www.getdbt.com) project running locally to your computer.
 
-This project showcases using dbt and Airflow together with [Cosmos](https://github.com/astronomer/astronomer-cosmos), allowing users to deploy dbt in production with Airflow best-practices.
+## Pre-requisites
 
-Astronomer is the best place to host Apache Airflow -- try it out with a free trial at [astronomer.io](https://www.astronomer.io/).
+1. A docker engine (we're going to use [colima](https://github.com/abiosoft/colima)); `brew install colima`
+2. Copy the Netskope certificate to colima - this is a one-off:
+    ```bash
+    colima start
+    scp ~/.aws/nskp_config/netskope-cert-bundle.pem colima:/tmp/netskope-cert-bundle.crt
+    colima ssh -- sudo cp /tmp/netskope-cert-bundle.crt /usr/local/share/ca-certificates/.
+    colima ssh -- sudo update-ca-certificates
+    colima stop
+    ```
 
-# Learning Paths
+## To get airflow working
 
-To learn more about data engineering with Apache Airflow, dbt, and Cosmos, make a few changes to this project! For example, try one of the following:
+1. Get a copy of the NetSkope certificates that we use internally and put them into the repo at `certs/netskope-cert-bundle.crt` like so:
+    ```bash
+    cp ~/.aws/nskp_config/netskope-cert-bundle.pem certs/netskope-cert-bundle.crt
+    ```
+    Note that the file extension has changed, and the [Dockerfile](./Dockerfile) uses the copied certificate.
+2. You will need a [private key](https://docs.snowflake.com/en/user-guide/key-pair-auth) to authenticate to the Admiral Business snowflake instance; the key file should be called snowflake_key.p8 and placed in the [dbt](./dbt) folder. See the dbt [profiles.yml](./dbt/profiles.yml) file to see how its referenced, along with [docker-compose.override.yml](./docker-compose.override.yml)
+3. Start `colima` in a separate terminal:
+    ```bash
+    colima start
+    ```
+4. Run the astro project, execute the following in the root folder:
+    ```bash
+    astro dev start
+    ```
+5. Go to http://localhost:8080 and see airflow/DAGS; trigger a run manually.
+6. Stop astro:
+    ```bash
+    astro dev stop
+    ```
+7. Stop colima:
+    ```bash
+    colima stop
+    ```    
 
-1. Use Postgres, MySQL, Snowflake, or another production-ready database instead of DuckDB
-2. Change the Cosmos DbtDag to Cosmos DbtTaskGroups! For extra help, check out the [Cosmos examples of DbtTaskGroups](https://github.com/astronomer/astronomer-cosmos/blob/main/dev/dags/basic_cosmos_task_group.py)
 
-# Project Contents
-
-Your Astro project contains the following files and folders:
-
-- dags: This folder contains the Python files for your Airflow DAGs. This project includes one example DAG:
-  - `dbt_cosmos_dag.py`: This DAG sets up [Cosmos](https://github.com/astronomer/astronomer-cosmos), allowing files in the /dbt directory to transform into Airflow tasks and taskgroups.
-- dbt/jaffle_shop: This folder contains the dbt project [jaffle_shop](https://github.com/dbt-labs/jaffle_shop_duckdb), a fictional ecommerce store. Use this as a starting point to learn how dbt and Airflow work together!
-- Dockerfile: This file contains a versioned Astro Runtime Docker image that provides a differentiated Airflow experience. If you want to execute other commands or overrides at runtime, specify them here.
-- include: This folder contains any additional files that you want to include as part of your project. In this example, constants.py includes configuration for your Cosmos project.
-- packages.txt: Install OS-level packages needed for your project by adding them to this file. It is empty by default.
-- requirements.txt: Install Python packages needed for your project by adding them to this file. In this project, we pin the Cosmos version.
-- plugins: Add custom or community plugins for your project to this file. It is empty by default.
-- airflow_settings.yaml: Use this local-only file to specify Airflow Connections, Variables, and Pools instead of entering them in the Airflow UI as you develop DAGs in this project.
-
-# Deploying to Production
-
-### ❗Warning❗
-
-This template used DuckDB, an in-memory database, for running dbt transformations. While this is great to learn Airflow, your data is not guaranteed to persist between executions! For production applications, use a _persistent database_ instead (consider DuckDB's hosted option MotherDuck or another database like Postgres, MySQL, or Snowflake).
+  
