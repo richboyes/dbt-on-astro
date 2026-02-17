@@ -33,7 +33,7 @@ This document outlines changes required to get this [astro](https://www.astronom
     ```bash
     astro dev start
     ```
-5. Go to http://localhost:8080 and see airflow/DAGS; trigger a run manually.
+5. Go to http://localhost:8080 and see airflow/DAGS; trigger a run manually. You will need to have secrets and credentials set up.
 6. Stop astro:
     ```bash
     astro dev stop
