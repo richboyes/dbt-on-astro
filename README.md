@@ -1,6 +1,6 @@
 # Updates required for Admiral Business
 
-This document outlines changes required to get this [astro](https://www.astronomer.io/docs) [DBT](https://www.getdbt.com) project running locally to your computer.
+This document outlines changes required to get this [astro](https://www.astronomer.io/docs) [DBT](https://www.getdbt.com) project running locally on your computer.
 
 ## Pre-requisites
 
