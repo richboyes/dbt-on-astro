@@ -4,7 +4,10 @@ This document outlines changes required to get this [astro](https://www.astronom
 
 ## Pre-requisites
 
-1. A docker engine (we're going to use [colima](https://github.com/abiosoft/colima)); `brew install colima`
+1. A docker engine (we're going to use [colima](https://github.com/abiosoft/colima)):
+    ```bash
+    brew install colima
+    ```
 2. Copy the Netskope certificate to colima - this is a one-off:
     ```bash
     colima start
