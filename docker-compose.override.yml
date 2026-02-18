@@ -4,4 +4,4 @@ services:
     env_file:
       - .env
     volumes:
-      - ./dbt:/usr/local/airflow/dbt
+      - ./dags/dbt:/usr/local/airflow/dags/dbt

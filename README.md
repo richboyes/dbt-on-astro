@@ -22,7 +22,7 @@ This document outlines changes required to get this [astro](https://www.astronom
 1. You will need a [private key](https://docs.snowflake.com/en/user-guide/key-pair-auth) to authenticate to the Admiral Business snowflake instance; the key file should be called snowflake_key.p8 and placed in the [dbt](./dbt) folder. See the dbt [profiles.yml](./dbt/profiles.yml) file to see how its referenced, along with [docker-compose.override.yml](./docker-compose.override.yml)
 2. Start `colima` in a separate terminal:
     ```bash
-    colima start
+    colima start --cpu 4 --memory 6 # as appropriate
     ```
 3. Run the astro project, execute the following in the root folder:
     ```bash

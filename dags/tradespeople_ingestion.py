@@ -37,7 +37,7 @@ with DAG(
     file_format_name = "SOURCE_PARQUET_FF"
     external_table_name = "SOURCE_PARQUET_EXT"
     target_table = "QUOTE_PACKAGES"
-    updated_at_filter = "2000-01-01"
+    updated_at_filter = "2026-02-16"
 
     load_quote_packages = SQLExecuteQueryOperator(
         task_id="quote_packages",
