@@ -27,7 +27,6 @@ with DAG(
     tags=["athena", "snowflake", "elt"],
     default_args={"retries": 0},
 ) as dag:
-    snowflake_conn_id = os.getenv("SNOWFLAKE_CONN_ID", "snowflake_default")
     aws_access_key_id = _require_env("AWS_ACCESS_KEY_ID")
     aws_secret_access_key = _require_env("AWS_SECRET_ACCESS_KEY")
     mask_secret(aws_access_key_id)
@@ -42,7 +41,7 @@ with DAG(
 
     load_quote_packages = SQLExecuteQueryOperator(
         task_id="quote_packages",
-        conn_id=snowflake_conn_id,
+        conn_id="snowflake_sandbox_encoded",
         split_statements=True,
         sql=f"""
         CREATE OR REPLACE STAGE {stage_name}

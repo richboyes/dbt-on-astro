@@ -28,7 +28,7 @@ This document outlines changes required to get this [astro](https://www.astronom
     ```bash
     astro dev start
     ```
-4. Go to http://localhost:8080 and see airflow/DAGS; trigger a run manually. You will need to have secrets and credentials set up.
+4. Go to http://localhost:8080 and see airflow/DAGS; you will need to set up Snowflake credentials in there, and then execute a DAG.
 5. Stop astro:
     ```bash
     astro dev stop
